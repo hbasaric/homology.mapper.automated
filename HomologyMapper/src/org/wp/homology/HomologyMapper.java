@@ -54,6 +54,7 @@ public class HomologyMapper {
 	private DataSource dsTarget;
 	private File outputDir;
 	private File mappingFile;
+	private File geneNameFile;
 	private IDMapper geneMapper;
 	private String webserviceUrl;
 	private File logFile;
@@ -64,6 +65,7 @@ public class HomologyMapper {
 		
 		outputDir = new File(props.getProperty("output.dir"));
 		mappingFile = new File(props.getProperty("mapping.file"));
+		geneNameFile = new File(props.getProperty("new.gene.names"));
 		
 		File bridgedb = new File(props.getProperty("source.gene.mapping.db"));
 		geneMapper = Utils.setUpIDMapper(bridgedb);
@@ -80,6 +82,7 @@ public class HomologyMapper {
 	public void convertPathways() {
 		try {
 			Map<Xref,Xref> map = MappingFileReader.readMappingFile(mappingFile, dsSource, dsTarget);
+			Map<String, String> geneNames = MappingFileReader.readGeneNameFile(geneNameFile);
 			Map<String, Pathway> pathways = PathwayReader.readPathways(source, webserviceUrl);
 			
 			List<Report> reports = new ArrayList<Report>();
@@ -87,7 +90,7 @@ public class HomologyMapper {
 			for(String p : pathways.keySet()) {
 				Pathway pathway = pathways.get(p);
 				String [] buffer = p.split(":");
-				Report r = PathwayConverter.convertPathway(pathway, buffer[0], buffer[1], map, target, geneMapper, dsSource);
+				Report r = PathwayConverter.convertPathway(pathway, buffer[0], buffer[1], map, target, geneMapper, dsSource, geneNames);
 				if(r != null) reports.add(r);
 			}
 			

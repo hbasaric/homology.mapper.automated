@@ -16,7 +16,7 @@ import org.pathvisio.core.model.PathwayElement;
 
 public class PathwayConverter {
 
-	public static Report convertPathway(Pathway p, String wpId, String revision, Map<Xref,Xref> mapping, Organism newOrg, IDMapper mapper, DataSource dsSource) {
+	public static Report convertPathway(Pathway p, String wpId, String revision, Map<Xref,Xref> mapping, Organism newOrg, IDMapper mapper, DataSource dsSource, Map<String, String> geneNames) {
 	
 		String oldOrg = p.getMappInfo().getOrganism();
 		try {
@@ -39,11 +39,13 @@ public class PathwayConverter {
 					
 					if(e.getXref() != null && !e.getXref().getId().equals("") && e.getXref().getDataSource() != null) {
 						if(mapping.containsKey(e.getXref())) {
-							e.addComment("Homology Mapping from " + oldOrg + " to " + newOrg.latinName() + ": Original ID = " + e.getXref(), null);
+							e.addComment("Homology Mapping from " + oldOrg + " to " + newOrg.latinName() + ": Original ID = " + e.getXref(), "HomologyMapper");
 							Xref newX = mapping.get(e.getXref());
 							e.setElementID(newX.getId());
 							e.setDataSource(newX.getDataSource());
-							
+							if(geneNames.containsKey(newX.getId())) {
+								e.setTextLabel(geneNames.get(newX.getId()));
+							}
 							report.countMappedGenes++;
 							report.getMappedGenes().add(printGene(e));
 						} else {
@@ -64,13 +66,21 @@ public class PathwayConverter {
 									}
 		
 									if(mappedXrefs.size() == 1) {
-										e.addComment("Homology Mapping from " + oldOrg + " to " + newOrg.latinName() + ": Original ID = " + e.getXref(), null);
+										e.addComment("Homology Mapping from " + oldOrg + " to " + newOrg.latinName() + ": Original ID = " + e.getXref(), "HomologyMapper");
 										Xref newX = mapping.get(mappedXrefs.get(0));
 										e.setElementID(newX.getId());
 										e.setDataSource(newX.getDataSource());
+										if(geneNames.containsKey(newX.getId())) {
+											e.setTextLabel(geneNames.get(newX.getId()));
+										}
 										report.countMappedGenes++;
 										report.getMappedGenes().add(printGene(e));
 									} else if(mappedXrefs.size() > 1) {
+										String comment = "Multiple homologues found: ";
+										for(Xref x : mappedXrefs) {
+											comment = comment + mapping.get(x) + ";";
+										}
+										e.addComment(comment, "HomologyMapper");
 										report.getMultiMappingGenes().add(printGene(e));
 										report.countMultiMapping++;
 										e.setElementID("");
@@ -94,8 +104,7 @@ public class PathwayConverter {
 					}
 				}
 			}
-			
-			newP.getMappInfo().addComment("Homology Mapping from " + oldOrg + " to " + newOrg.latinName() + ": Score =  " + report.getHomologyScore() + "%","");
+			newP.getMappInfo().addComment("This pathway was inferred from " + oldOrg + " pathway [http://wikipathways.org/instance/"+ wpId + "_r" + revision + " " + wpId + "_" + revision +"] with a " + report.getHomologyScore() + "% conversion rate.","HomologyMapper");
 			return report;
 		} catch(Exception e) {
 			

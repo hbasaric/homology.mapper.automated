@@ -34,4 +34,22 @@ public class MappingFileReader {
 		reader.close();
 		return xrefs;
 	}
+
+	public static Map<String, String> readGeneNameFile(File file) throws IOException {
+		Map<String, String> names = new HashMap<String, String>();
+		BufferedReader reader = new BufferedReader(new FileReader(file));
+		
+		String line;
+		while((line = reader.readLine()) != null) {
+			String [] buffer = line.split("\t");
+			if(buffer.length == 2) {
+				String id = buffer[0];
+				String name = buffer[1];
+				
+				names.put(id, name);
+			}
+		}
+		reader.close();
+		return names;
+	}
 }
