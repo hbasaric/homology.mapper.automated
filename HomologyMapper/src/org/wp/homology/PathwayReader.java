@@ -1,5 +1,6 @@
 package org.wp.homology;
 
+import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.rmi.RemoteException;
@@ -31,6 +32,24 @@ public class PathwayReader {
 					Pathway pathway = WikiPathwaysClient.toPathway(p);
 					pathways.put(info.getId() + ":" + info.getRevision(), pathway);
 				}
+			}
+		}
+		
+		return pathways;
+	}
+	
+	public static Map<String, Pathway> readPathways(Organism organism, File inputDir) {
+		Map<String, Pathway> pathways = new HashMap<String, Pathway>();		
+		
+		for(File f : inputDir.listFiles()) {
+			if(f.getName().endsWith(".gpml")) {
+				Pathway pathway = new Pathway();
+				try {
+					pathway.readFromXml(f, true);
+				} catch (ConverterException e) {
+					System.out.println("Could not parse pathway: " + f.getName());
+				}
+				pathways.put(f.getName(), pathway);
 			}
 		}
 		

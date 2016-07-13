@@ -9,8 +9,9 @@ public class Report {
 
 	private Pathway newPathway;
 	private String name;
-	private String wpId;
-	private String revision;
+	private String wpId = null;
+	private String revision = null;
+	private String source = null;
 	public Integer countTotalGenes = 0;
 	private List<String> totalGenes;
 	public Integer countMappedGenes = 0;
@@ -98,5 +99,13 @@ public class Report {
 
 	public void setRevision(String revision) {
 		this.revision = revision;
+	}
+
+	public String getSource() {
+		return source;
+	}
+
+	public void setSource(String source) {
+		this.source = source;
 	}
 }

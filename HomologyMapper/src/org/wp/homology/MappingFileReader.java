@@ -20,14 +20,15 @@ public class MappingFileReader {
 		while((line = reader.readLine()) != null) {
 			String [] buffer = line.split("\t");
 			if(buffer.length == 2) {
-			
-				Xref sXref = new Xref(buffer[0], input);
-				Xref tXref = new Xref(buffer[1], output);
-				
-				if(!xrefs.containsKey(sXref)) {
-					xrefs.put(sXref, tXref);
-				} else {
-					System.out.println("multiple");
+				if(!buffer[0].equals("") && !buffer[1].equals("")) {
+					Xref sXref = new Xref(buffer[0], input);
+					Xref tXref = new Xref(buffer[1], output);
+					
+					if(!xrefs.containsKey(sXref)) {
+						xrefs.put(sXref, tXref);
+					} else {
+						System.out.println("multiple homologues " + buffer[0]);
+					}
 				}
 			}
 		}
