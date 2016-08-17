@@ -32,6 +32,6 @@ https://github.com/PathVisio/homology.mapper/blob/master/HomologyMapper/mapper.c
 ### 4. Create config file
 In step 1 you downloaded and unzipped the HomologyMapper-xxx.zip file. Use the command line and go into the created directory (on the same level as HomologyMapper.jar is located). Then run the following command:
 
-```sh
+```Shell
 java -jar -Dencoding.file=UTF-8 HomologyMapper.jar /path-to-config-file/my.config
 ```
