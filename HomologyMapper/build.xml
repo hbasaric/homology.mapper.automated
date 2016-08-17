@@ -17,7 +17,8 @@
 	
 	<target name="clean">
 		<delete dir="${build.dir}"/>
-		<delete file="${dist.name}"/>
+		<delete dir="${dist.dir}"/>
+		<delete dir="bin"/>
 	</target>
 	
 	<target name="prepare">
