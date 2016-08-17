@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<project name="HomologyMapper" default="jar" basedir=".">
+
+	<property name="src.dir" value="src"/>
+	<property name="lib.dir" value="lib"/>
+	<property name="build.dir" value="build"/>
+	<property name="jar.name" value="${ant.project.name}.jar"/>
+	<property name="dist.dir" value="dist"/>
+	
+	<path id="project.class.path">
+		<fileset dir="${lib.dir}">
+			<include name="derby.jar"/>
+			<include name="org.bridgedb.rdb.jar"/>
+			<include name="org.wikipathways.webservice.api.lib.jar"/>
+		</fileset>
+	</path>
+	
+	<target name="clean">
+		<delete dir="${build.dir}"/>
+		<delete file="${dist.name}"/>
+	</target>
+	
+	<target name="prepare">
+		<mkdir dir="${build.dir}"/>
+		<mkdir dir="${dist.dir}/lib"/>
+		<copy todir="${dist.dir}/lib">
+   			<fileset dir="${lib.dir}"/>
+ 		</copy>
+	</target>
+	
+	<target name="compile" depends="prepare">
+		<echo>Compiling: ${jar.name}</echo>
+		<javac srcdir="${src.dir}" includes="**" destdir="${build.dir}" debug="true">
+			<classpath refid="project.class.path"/>
+		</javac>
+	</target>
+	
+	<target name="jar" depends="compile"> 
+		<echo>Creating JAR: ${jar.name}</echo>
+		<!--<unjar src="${lib.dir}/derby.jar" dest="${build.dir}"/>
+		<unjar src="${lib.dir}/org.bridgedb.rdb.jar" dest="${build.dir}"/>
+		<unjar src="${lib.dir}/org.wikipathways.webservice.api.lib.jar" dest="${build.dir}"/>-->
+		<jar jarfile="${dist.dir}/${jar.name}">
+			<manifest>
+               			<attribute name="Main-Class" value="org.wp.homology.LocalHomologyConverter"/>
+				<attribute name="Class-Path" value="lib/derby.jar lib/org.bridgedb.rdb.jar lib/org.wikipathways.webservice.api.lib.jar"/>
+            		</manifest>
+			<fileset dir="build">
+				<include name="**/*"/>					
+			</fileset>
+			<!--<zipgroupfileset dir="${lib.dir}" includes="**/*.jar" /> -->
+		</jar>
+	</target>
+</project>

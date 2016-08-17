@@ -17,6 +17,7 @@ public class MappingFileReader {
 		BufferedReader reader = new BufferedReader(new FileReader(f));
 		
 		String line;
+		int count = 0;
 		while((line = reader.readLine()) != null) {
 			String [] buffer = line.split("\t");
 			if(buffer.length == 2) {
@@ -27,11 +28,13 @@ public class MappingFileReader {
 					if(!xrefs.containsKey(sXref)) {
 						xrefs.put(sXref, tXref);
 					} else {
-						System.out.println("multiple homologues " + buffer[0]);
+						count++;
+//						System.out.println("multiple homologues " + buffer[0]);
 					}
 				}
 			}
 		}
+		System.out.println(count + " genes with multiple homologues");
 		reader.close();
 		return xrefs;
 	}
