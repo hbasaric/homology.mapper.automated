@@ -37,9 +37,6 @@
 	
 	<target name="jar" depends="compile"> 
 		<echo>Creating JAR: ${jar.name}</echo>
-		<!--<unjar src="${lib.dir}/derby.jar" dest="${build.dir}"/>
-		<unjar src="${lib.dir}/org.bridgedb.rdb.jar" dest="${build.dir}"/>
-		<unjar src="${lib.dir}/org.wikipathways.webservice.api.lib.jar" dest="${build.dir}"/>-->
 		<jar jarfile="${dist.dir}/${jar.name}">
 			<manifest>
                			<attribute name="Main-Class" value="org.wp.homology.LocalHomologyConverter"/>
@@ -48,7 +45,6 @@
 			<fileset dir="build">
 				<include name="**/*"/>					
 			</fileset>
-			<!--<zipgroupfileset dir="${lib.dir}" includes="**/*.jar" /> -->
 		</jar>
 	</target>
 </project>
