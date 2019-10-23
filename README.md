@@ -48,7 +48,7 @@ Download and unzip the latest HomologyMapper-xxx.zip file from https://github.co
 
 ----
 
-### 4. Create config file
+### 4. Run HomologyMapper file
 Use the command line and go into the created directory of the unzipped HomologyMapper folder (on the same level as HomologyMapper.jar is located). Then run the following command:
 ```
 java -jar -Dencoding.file=UTF-8 HomologyMapper.jar /path-to-config-file/my.config
