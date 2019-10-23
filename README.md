@@ -9,25 +9,26 @@ To use the HomologyMapper, you need to provide three files:
 1.1 Homology mapping - file with two columns - separated by tab (filename ends with .tsv or .txt) :
   * first column = identifier in original species
   * second column = identifier in new species
-  * See hsa-mmu.txt test file (only an example!): https://github.com/PathVisio/homology.mapper/tree/master/test
+  * See [hsa-mmu.txt test file](https://github.com/PathVisio/homology.mapper/tree/master/test) for an example of required input.
 
      1. Ensembl Biomart - http://www.ensembl.org/biomart, see [screenshot](https://github.com/PathVisio/homology.mapper/blob/master/test/biomart-homology.png))  
-     1. Wikidata - https://w.wiki/AeL , example ID mapping from Mouse to Human
+     1. Wikidata - [example](https://w.wiki/AeL) ID mapping from Mouse to Human
   
 1.2 New gene names - file with two columns - separated by tab (filename ends with .tsv or .txt) :
   * first column = identifier per gene for new species
   * second column = gene name per identifier for new species
-  * check mmu-genes.txt test file (only an example!): https://github.com/PathVisio/homology.mapper/tree/master/test
+  * check [mmu-genes.txt test file](https://github.com/PathVisio/homology.mapper/tree/master/test) for an example of required input.
 
     1. Ensembl Biomart - http://www.ensembl.org/biomart, see [screenshot](https://github.com/PathVisio/homology.mapper/blob/master/test/biomart-gene-names.png))
-    1. Wikidata - https://w.wiki/AeM , example mapping Human ID to name
+    1. Wikidata - [example](https://w.wiki/AeM) mapping Human ID to name
 
 1.3 Identifier mapping for original species - .bridge file:
   * Download these files from the [BridgeDb website](https://www.bridgedb.org/mapping-databases/ensembl-gene-mappings/).
   * Use the correct species (the original one).
+  * This file is used to map the identifiers in the original GPML file to one database, which is later used to convert to a new species.
 ----
 
-### 1. Update config file
+### 2. Update config file
 Use the example config file and adapt it to your use case:
 https://github.com/PathVisio/homology.mapper/blob/master/HomologyMapper/mapper.config
   * source.organism = Latin Name of Original Organism, as being [supported by PathVisio](https://www.bridgedb.org/mapping-databases/ensembl-gene-mappings/).
