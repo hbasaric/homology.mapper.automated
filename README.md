@@ -6,6 +6,7 @@ This tool allows you to locally perform homology mapper conversion from GPML fil
 
 ### 1. Homology mapping and new gene names
 To use the HomologyMapper, you need to provide three files:
+
 1.1 Homology mapping - file with two columns - separated by tab (filename ends with .tsv or .txt) :
   * first column = identifier in original species
   * second column = identifier in new species
@@ -22,8 +23,8 @@ To use the HomologyMapper, you need to provide three files:
     1. Ensembl Biomart - http://www.ensembl.org/biomart, see [screenshot](https://github.com/PathVisio/homology.mapper/blob/master/test/biomart-gene-names.png))
     1. Wikidata - [example](https://w.wiki/AeM) mapping Human ID to name
 
-1.3 Identifier mapping for original species - .bridge file:
-  * Download these files from the [BridgeDb website](https://www.bridgedb.org/mapping-databases/ensembl-gene-mappings/).
+1.3 Identifier mapping for original species - (filename ends with .bridge file) :
+  * Download these files from the [BridgeDb website](https://bridgedb.github.io/data/gene_database/).
   * Use the correct species (the original one).
   * This file is used to map the identifiers in the original GPML file to one database, which is later used to convert to a new species.
 ----
