@@ -62,7 +62,7 @@ public class HomologyMapper {
 	public HomologyMapper(Properties props) throws ClassNotFoundException, IDMapperException {
 		source = Organism.fromLatinName(props.getProperty("source.organism"));
 		target = Organism.fromLatinName(props.getProperty("target.organism"));
-		
+
 		outputDir = new File(props.getProperty("output.dir"));
 		mappingFile = new File(props.getProperty("mapping.file"));
 		geneNameFile = new File(props.getProperty("new.gene.names"));

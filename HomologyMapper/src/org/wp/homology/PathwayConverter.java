@@ -17,7 +17,7 @@ import org.pathvisio.core.model.PathwayElement;
 public class PathwayConverter {
 
 	public static Report convertPathway(Pathway p, String wpId, String revision, Map<Xref,Xref> mapping, Organism newOrg, IDMapper mapper, DataSource dsSource, Map<String, String> geneNames) {
-	
+
 		String oldOrg = p.getMappInfo().getOrganism();
 		try {
 			Pathway newP = p.clone();
@@ -27,7 +27,6 @@ public class PathwayConverter {
 			report.setNewPathway(newP);
 			report.setWpId(wpId);
 			report.setRevision(revision);
-			
 			for(PathwayElement e : newP.getDataObjects()) {
 				if(e.getObjectType().equals(ObjectType.DATANODE) && 
 						(e.getDataNodeType().equals("GeneProduct") ||
@@ -135,15 +134,24 @@ public class PathwayConverter {
 	public static Report convertPathway(Pathway p, String source, Map<Xref,Xref> mapping, Organism newOrg, IDMapper mapper, DataSource dsSource, Map<String, String> geneNames) {
 		
 		String oldOrg = p.getMappInfo().getOrganism();
+		String codeName;
+		String oldVersion = "";
+		String fileName = "";
 		try {
 			Pathway newP = p.clone();
 			newP.getMappInfo().setOrganism(newOrg.latinName());
-			
-			Report report = new Report(p.getMappInfo().getMapInfoName(), p.getMappInfo().getMapInfoName().replace(" ", "_").replace("/", "_")+".gpml");
+			codeName = newOrg.code();
+			fileName = source+"_"+codeName;
+			Report report = new Report(p.getMappInfo().getMapInfoName(), fileName + ".gpml");
 			report.setNewPathway(newP);
 			report.setSource(source);
-			
 			for(PathwayElement e : newP.getDataObjects()) {
+				if (e.getObjectType().equals(ObjectType.MAPPINFO)){
+					e.setAuthor(null);
+					oldVersion = e.getVersion();
+					e.setVersion(source+"_"+codeName);
+					e.addComment("ECO:0007481 - biological system reconstruction evidence based on orthology evidence used in automatic assertion", "ECO");
+				}
 				if(e.getObjectType().equals(ObjectType.DATANODE) && 
 						(e.getDataNodeType().equals("GeneProduct") ||
 						e.getDataNodeType().equals("Protein") ||
@@ -222,7 +230,7 @@ public class PathwayConverter {
 					}
 				}
 			}
-			newP.getMappInfo().addComment("This pathway was inferred from " + oldOrg + " pathway ["+ source + "] with a " + report.getHomologyScore() + "% conversion rate.","HomologyMapper");
+			newP.getMappInfo().addComment("This pathway was inferred from " + oldOrg + " pathway "+ source + ".gpml ("+ oldVersion +") with a " + report.getHomologyScore() + "% conversion rate.","HomologyMapper");
 			return report;
 		} catch(Exception e) {
 			
@@ -240,4 +248,5 @@ public class PathwayConverter {
 		
 		return null;
 	}
+	
 }

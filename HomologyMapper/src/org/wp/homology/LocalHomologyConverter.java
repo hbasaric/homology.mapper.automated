@@ -20,7 +20,6 @@ public class LocalHomologyConverter {
 			try {
 				Configurations conf = new Configurations();
 				conf.readConfigFile(new File(args[0]));
-				
 				MIMShapes.registerShapes();
 				LocalHomologyConverter converter = new LocalHomologyConverter();
 				converter.convertPathways(conf);
@@ -29,7 +28,7 @@ public class LocalHomologyConverter {
 			} catch (ClassNotFoundException e) {
 				System.out.println("Cannot set up ID mapper");
 			} catch (IDMapperException e) {
-				System.out.println("Cannot set up ID mapper");
+				System.out.println("Cannot set up ID mapper, IDMapper Exception");
 			}
 		}
 	}
@@ -38,7 +37,7 @@ public class LocalHomologyConverter {
 		Map<Xref,Xref> map = MappingFileReader.readMappingFile(conf.getMappingFile(), conf.getSystemCodeSource(), conf.getSystemCodeTarget());
 		Map<String, String> geneNames = MappingFileReader.readGeneNameFile(conf.getNewGeneNames());
 		Map<String, Pathway> pathways = PathwayReader.readPathways(conf.getSourceOrganism(), conf.getInputDir());
-		
+
 		List<Report> reports = new ArrayList<Report>();
 		
 		for(String p : pathways.keySet()) {
@@ -60,9 +59,7 @@ public class LocalHomologyConverter {
 				pathwaysWithErrors.add(r);
 			}
 		}
-		
-		
-		
+	
 		for(Report r : pathwaysWithErrors) {
 			System.out.println("Remove: " + r.getName());
 			reports.remove(r);
@@ -98,7 +95,6 @@ public class LocalHomologyConverter {
 					r.getNoXrefGenes()+"\n");
 		}
 		writer.close();
-		
 	}
 	
 	
