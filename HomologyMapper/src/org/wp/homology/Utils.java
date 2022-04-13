@@ -21,6 +21,5 @@ public class Utils {
 		Class.forName("org.bridgedb.rdb.IDMapperRdb");  
 		IDMapper mapper = BridgeDb.connect("idmapper-pgdb:" + file.getAbsolutePath());
 		return mapper;
-		//test
 	}
 }
