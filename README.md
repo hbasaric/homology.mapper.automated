@@ -65,12 +65,12 @@ https://github.com/PathVisio/homology.mapper.auto/blob/master/HomologyMapper/aut
 ----
 
 ### 3. Download latest release
-Download and unzip the latest HomologyMapper-xxx.zip file from https://github.com/PathVisio/homology.mapper.auto/releases
+Download and unzip the latest HomologyMapperAuto.zip file from https://github.com/hbasaric/homology.mapper.automated/releases/
 
 ----
 
 ### 4. Run HomologyMapper file
-Use the command line and go into the created directory of the unzipped HomologyMapper folder (on the same level as HomologyMapper.jar is located). Then run the following command:
+Use the command line and go into the created directory of the unzipped HomologyMapper folder (on the same level as HomologyMapperAuto.jar is located). Then run the following command:
 ```
-java -jar -Dencoding.file=UTF-8 HomologyMapper.jar /path-to-config-file/my.config
+java -jar -Dencoding.file=UTF-8 HomologyMapperAuto.jar /path-to-properties-file/my.properties
 ```
