@@ -76,4 +76,24 @@ public class PathwayReader {
 			}	
 		return pathways;
 	}
+	
+	public static Map<String, Pathway> readPathways(Organism organism, File inputDir, String wpID) {
+		Map<String, Pathway> pathways = new HashMap<String, Pathway>();
+		for(File f : inputDir.listFiles()) {
+			if (f.isDirectory()) {
+                for (File pf: f.listFiles()) {
+    				if(pf.getName().endsWith(".gpml") && pf.getName().equals(wpID+".gpml")) {
+    					Pathway pathway = new Pathway();
+    					try {
+    						pathway.readFromXml(pf, true);
+    					} catch (ConverterException e) {
+    						System.out.println("Could not parse pathway: " + pf.getName());
+    					}
+    					pathways.put(f.getName(), pathway);
+    				}
+                }
+			}
+			}	
+		return pathways;
+	}
 }
